@@ -4,10 +4,14 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.annotations.ManyToAny;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 
 @Entity
 public class Product implements Serializable {
@@ -20,6 +24,8 @@ public class Product implements Serializable {
         private Double price;
         private String imgUrl;
 
+        @ManyToAny
+        @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
         private Set<Category> categories = new HashSet<>();
 
         public Product() {
