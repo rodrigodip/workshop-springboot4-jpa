@@ -27,4 +27,8 @@ public class UserService {
                                 .orElseThrow(
                                                 () -> new RuntimeException("User Not Found."));
         }
+
+        public User insert(User user) {
+                return userRepository.save(user);
+        }
 }
