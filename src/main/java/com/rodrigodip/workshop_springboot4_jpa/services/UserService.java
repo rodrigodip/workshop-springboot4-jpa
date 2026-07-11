@@ -12,6 +12,8 @@ import com.rodrigodip.workshop_springboot4_jpa.repositories.UserRepository;
 import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.DataBaseException;
 import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UserService {
 
@@ -47,9 +49,13 @@ public class UserService {
         }
 
         public User update(long id, User newUserData) {
-                User foundUser = userRepository.getReferenceById(id);
-                updateData(foundUser, newUserData);
-                return userRepository.save(foundUser);
+                try {
+                        User foundUser = userRepository.getReferenceById(id);
+                        updateData(foundUser, newUserData);
+                        return userRepository.save(foundUser);
+                } catch (EntityNotFoundException e) {
+                        throw new ResourceNotFoundException(id);
+                }
         }
 
         private void updateData(User foundUser, User newUserData) {
