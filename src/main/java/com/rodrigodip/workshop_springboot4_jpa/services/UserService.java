@@ -3,10 +3,13 @@ package com.rodrigodip.workshop_springboot4_jpa.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.rodrigodip.workshop_springboot4_jpa.entities.User;
 import com.rodrigodip.workshop_springboot4_jpa.repositories.UserRepository;
+import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.DataBaseException;
 import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -33,7 +36,14 @@ public class UserService {
         }
 
         public void delete(Long id) {
-                userRepository.deleteById(id);
+                try {
+                        userRepository.deleteById(id);
+
+                } catch (EmptyResultDataAccessException e) {
+                        throw new ResourceNotFoundException(id);
+                } catch (DataIntegrityViolationException e) {
+                        throw new DataBaseException(e.getMessage());
+                }
         }
 
         public User update(long id, User newUserData) {
