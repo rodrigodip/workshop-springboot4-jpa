@@ -1,3 +1,6 @@
+### Ignore DEV environment properties file
+src/main/resources/application-dev.properties
+
 HELP.md
 NOTES.md
 target/
