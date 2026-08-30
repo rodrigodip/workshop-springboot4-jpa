@@ -1,5 +1,9 @@
 ### Ignore DEV environment properties file
 src/main/resources/application-dev.properties
+src/main/resources/application-prod.properties
+
+### Bruno API Client ###
+http-requests/
 
 HELP.md
 NOTES.md

@@ -1,3 +1,16 @@
+#=======================================================================
+# THIS IS A TEMPLATE
+#
+# - For POSTGRES usage:
+# 1. Rename this file to 'application-dev.properties'
+# 2. change <your-db-name>, <your-postgres-user> and <your-postgres-password>
+# 3. On file 'application.properties' set 'spring.profiles.active=dev'
+#
+# - For H2 usage:
+# 1. On file 'application.properties' set 'spring.profiles.active=test'
+#
+#=======================================================================
+#
 # POSTGRES
 spring.datasource.url=jdbc:postgresql://localhost:5432/<your-db-name>
 spring.datasource.username=<my-postgres-user>
