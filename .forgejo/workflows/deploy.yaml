@@ -1,0 +1,23 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: vps
+    steps:
+      - name: Pull latest changes
+        run: |
+          cd /srv/workshop-springboot4-jpa
+          git pull origin main
+
+      - name: Build
+        run: |
+          cd /srv/workshop-springboot4-jpa
+          ./mvnw clean package -DskipTests
+
+      - name: Deploy
+        run: sudo /usr/local/bin/deploy-workshop-springboot4-jpa.sh
