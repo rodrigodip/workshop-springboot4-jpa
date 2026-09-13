@@ -62,5 +62,8 @@ public class UserService {
                 foundUser.setName(newUserData.getName());
                 foundUser.setEmail(newUserData.getEmail());
                 foundUser.setPhone(newUserData.getPhone());
+                if (newUserData.getPassword() != null) {
+                        foundUser.setPassword(newUserData.getPassword());
+                }
         }
 }

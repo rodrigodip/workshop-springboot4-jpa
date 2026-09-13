@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ public class User implements Serializable {
         private String name;
         private String email;
         private String phone;
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;
 
         @JsonIgnore
