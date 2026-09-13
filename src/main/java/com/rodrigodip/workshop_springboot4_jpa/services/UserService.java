@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.rodrigodip.workshop_springboot4_jpa.entities.User;
@@ -39,10 +38,11 @@ public class UserService {
 
         public void delete(Long id) {
                 try {
+                        if (!userRepository.existsById(id)) {
+                                throw new ResourceNotFoundException(id);
+                        }
                         userRepository.deleteById(id);
 
-                } catch (EmptyResultDataAccessException e) {
-                        throw new ResourceNotFoundException(id);
                 } catch (DataIntegrityViolationException e) {
                         throw new DataBaseException(e.getMessage());
                 }
