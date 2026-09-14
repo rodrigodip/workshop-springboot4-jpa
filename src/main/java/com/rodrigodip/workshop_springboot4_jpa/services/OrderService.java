@@ -44,6 +44,33 @@ public class OrderService {
                 return orderRepository.findAll();
         }
 
+        /** Web-only filter (AD-04c). REST contract unchanged. */
+        public List<Order> findFiltered(String status, Long clientId) {
+                String normalized = (status == null || status.isBlank() || status.equalsIgnoreCase("ALL"))
+                                ? null
+                                : status.trim().toUpperCase();
+                return orderRepository.findAll().stream()
+                                .filter(o -> normalized == null || o.getOrderStatus().name().equals(normalized))
+                                .filter(o -> clientId == null || (o.getClient() != null
+                                                && clientId.equals(o.getClient().getId())))
+                                .toList();
+        }
+
+        /** Web-only filter by client name, contains case-insensitive (AD-07). */
+        public List<Order> findFilteredByClientName(String status, String clientName) {
+                String normalized = (status == null || status.isBlank() || status.equalsIgnoreCase("ALL"))
+                                ? null
+                                : status.trim().toUpperCase();
+                String needle = (clientName == null || clientName.isBlank()) ? null
+                                : clientName.trim().toLowerCase();
+                return orderRepository.findAll().stream()
+                                .filter(o -> normalized == null || o.getOrderStatus().name().equals(normalized))
+                                .filter(o -> needle == null || (o.getClient() != null
+                                                && o.getClient().getName() != null
+                                                && o.getClient().getName().toLowerCase().contains(needle)))
+                                .toList();
+        }
+
         public Order FindByID(Long id) {
                 Optional<Order> orderOptional = orderRepository.findById(id);
                 return orderOptional
