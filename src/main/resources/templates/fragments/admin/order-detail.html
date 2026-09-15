@@ -1,0 +1,23 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="panel">
+  <button class="btn btn-ghost" hx-get="/fragments/admin/orders" hx-target="#admin-panel" hx-swap="innerHTML">← Back to orders</button>
+  <div class="card mt-3">
+    <h2 class="font-bold">Order #<span th:text="${order.id}">1</span> · <span th:text="${order.orderStatus}">S</span></h2>
+    <p class="text-xs text-slate-400" th:text="${moment} ?: ${order.moment}">20 Jun 2019 19:53</p>
+    <table class="tbl mt-2">
+      <thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Subtotal</th></tr></thead>
+      <tbody>
+      <tr th:each="it : ${order.itens}">
+        <td th:text="${it.product.name}">p</td><td th:text="${it.quantity}">1</td>
+        <td th:text="${#numbers.formatDecimal(it.price, 1, 2)}">0.00</td><td th:text="${#numbers.formatDecimal(it.subTotal, 1, 2)}">0.00</td>
+      </tr>
+      </tbody>
+    </table>
+    <p class="mt-2 font-bold">Total: $<span th:text="${#numbers.formatDecimal(order.total, 1, 2)}">0.00</span></p>
+    <form class="flex gap-2 mt-3" th:hx-put="@{'/fragments/admin/orders/' + ${order.id} + '/status'}" hx-target="#admin-panel" hx-swap="innerHTML">
+      <select class="input" style="max-width:14rem" name="orderStatus">
+        <option th:each="s : ${statuses}" th:value="${s.name()}" th:text="${s.name()}" th:selected="${s == order.orderStatus}">S</option>
+      </select>
+      <button class="btn btn-primary" type="submit">Change status</button>
+    </form>
+  </div>
+</div>

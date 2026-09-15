@@ -1,0 +1,11 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="detail">
+  <div class="card">
+    <div class="ph product-media">
+      <img th:src="@{/img/product-image-placeholder.svg}" src="/img/product-image-placeholder.svg"
+           alt="Product image placeholder" width="100" height="100"/>
+    </div>
+    <h3 class="font-bold text-lg mt-2" th:text="${product.name}">Product</h3>
+    <p class="text-sm text-slate-300" th:text="${product.description}">desc</p>
+    <p class="mt-1">$<span th:text="${#numbers.formatDecimal(product.price, 1, 2)}">0.00</span></p>
+  </div>
+</div>

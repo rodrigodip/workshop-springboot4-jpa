@@ -1,0 +1,22 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="panel">
+  <div class="card">
+    <h2 class="font-bold">New category</h2>
+    <form class="flex gap-2 mt-2" hx-post="/fragments/admin/categories" hx-target="#admin-panel" hx-swap="innerHTML">
+      <input class="input" name="name" placeholder="Category name *" required/>
+      <button class="btn btn-primary" type="submit">Create</button>
+    </form>
+  </div>
+  <div class="card mt-3">
+    <table class="tbl">
+      <thead><tr><th>#</th><th>Name</th><th></th><th></th></tr></thead>
+      <tbody>
+      <tr th:each="c : ${categories}">
+        <td th:text="${c.id}">1</td>
+        <td th:text="${c.name}">n</td>
+        <td><button class="btn btn-ghost" th:hx-get="@{'/fragments/admin/categories/' + ${c.id} + '/edit'}" hx-target="#admin-modal" hx-swap="innerHTML">Edit</button></td>
+        <td><button class="btn btn-danger" th:hx-delete="@{'/fragments/admin/categories/' + ${c.id}}" hx-target="#admin-panel" hx-swap="innerHTML" hx-confirm="Delete category?">Delete</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

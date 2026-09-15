@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workshop Spring Boot + JPA — Live Demo</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+  <link rel="stylesheet" th:href="@{/css/app.css(v=2)}" href="/css/app.css?v=2" />
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen" th:data-initial-tab="${initialTab}">
+  <header class="border-b border-slate-800">
+    <div class="max-w-6xl mx-auto px-4 py-6 flex flex-wrap items-center gap-4 justify-between">
+      <div>
+        <p class="text-xs uppercase tracking-widest text-emerald-400">Live demo · Workshop Spring Boot 4 + JPA/Hibernate
+        </p>
+        <h1 class="text-2xl font-bold">API Showcase — Users, Products, Categories, Orders</h1>
+        <p class="text-sm text-slate-400">Learning project by Rodrigo de Paula · This UI is served by the API ·
+          HTML/HTMX (no CORS).</p>
+        <div class="flex items-center gap-2 text-xs">
+          <span class="px-2 py-1 rounded bg-amber-400/10 text-amber-300 border border-amber-400/30 mt-6">Demo — no auth
+            — all
+            endpoints public</span>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-4 pb-4 flex gap-2 text-xs">
+      <span class="badge">Java 25</span><span class="badge">Spring Boot 4.1</span>
+      <span class="badge">Thymeleaf</span><span class="badge">HTMX</span><span class="badge">Tailwind</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-6">
+    <div role="tablist" aria-label="Demo areas"
+      class="inline-flex rounded-xl bg-slate-900 border border-slate-800 p-1 gap-1">
+      <button id="tab-btn-client" role="tab" aria-selected="true" aria-controls="panel-client"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold">Client</button>
+      <button id="tab-btn-admin" role="tab" aria-selected="false" aria-controls="panel-admin"
+        class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold">Admin</button>
+    </div>
+
+    <section id="panel-client" role="tabpanel" aria-labelledby="tab-btn-client" class="pt-4">
+      <div id="client-panel" hx-get="/fragments/client/panel" hx-trigger="load" hx-swap="innerHTML">
+        <p class="text-slate-400 text-sm">Loading storefront…</p>
+      </div>
+    </section>
+
+    <section id="panel-admin" role="tabpanel" aria-labelledby="tab-btn-admin" class="pt-4" hidden>
+      <nav class="flex flex-wrap gap-2 text-sm pb-3">
+        <button class="subnav" hx-get="/fragments/admin/dashboard" hx-target="#admin-panel"
+          hx-swap="innerHTML">Dashboard</button>
+        <button class="subnav" hx-get="/fragments/admin/products" hx-target="#admin-panel"
+          hx-swap="innerHTML">Products</button>
+        <button class="subnav" hx-get="/fragments/admin/categories" hx-target="#admin-panel"
+          hx-swap="innerHTML">Categories</button>
+        <button class="subnav" hx-get="/fragments/admin/orders" hx-target="#admin-panel"
+          hx-swap="innerHTML">Orders</button>
+        <button class="subnav" hx-get="/fragments/admin/users" hx-target="#admin-panel"
+          hx-swap="innerHTML">Clients</button>
+      </nav>
+      <div id="admin-panel">
+        <p class="text-slate-400 text-sm">Pick a section above — content loads here without leaving this page.</p>
+      </div>
+      <div id="admin-modal" data-modal-mount></div>
+    </section>
+  </main>
+
+  <footer class="max-w-6xl mx-auto px-4 pb-10 text-xs text-slate-500">
+    <p class="text-sm text-slate-400">You can see JSON response for
+      <a class="px-2 py-1 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700" href="/users" target="_blank"
+        rel="noopener">/users</a> and
+      <a class="px-2 py-1 rounded bg-slate-800 border border-slate-700 hover:bg-slate-700" href="/orders"
+        target="_blank" rel="noopener">/orders</a> .
+    </p>
+  </footer>
+  <script th:src="@{/js/tabs.js(v=2)}" src="/js/tabs.js?v=2"></script>
+  <script th:src="@{/js/cart.js(v=2)}" src="/js/cart.js?v=2"></script>
+  <script th:src="@{/js/modal.js(v=2)}" src="/js/modal.js?v=2"></script>
+  <script th:src="@{/js/admin-nav.js(v=2)}" src="/js/admin-nav.js?v=2"></script>
+  <script th:src="@{/js/admin-chips.js(v=2)}" src="/js/admin-chips.js?v=2"></script>
+</body>
+
+</html>

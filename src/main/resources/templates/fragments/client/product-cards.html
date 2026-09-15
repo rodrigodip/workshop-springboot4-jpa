@@ -1,0 +1,31 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="cards">
+  <div th:if="${#lists.isEmpty(products)}" class="text-sm text-slate-400">No products found.</div>
+  <div th:unless="${#lists.isEmpty(products)}" class="grid sm:grid-cols-2 gap-3">
+    <div th:each="p : ${products}" class="card">
+      <div class="ph product-media">
+        <img th:src="@{/img/product-image-placeholder.svg}" src="/img/product-image-placeholder.svg"
+             alt="Product image placeholder" width="100" height="100"/>
+      </div>
+      <h3 class="font-bold mt-2" th:text="${p.name}">Product</h3>
+      <p class="text-sm mt-1">$<span th:text="${#numbers.formatDecimal(p.price, 1, 2)}">0.00</span></p>
+      <p class="text-xs text-slate-400">
+        <span th:each="c : ${p.categories}" th:text="${c.name} + ' '" >Cat</span>
+      </p>
+      <div class="flex gap-2 mt-2">
+        <input class="input" style="max-width:5rem" type="number" min="1" value="1"
+               th:id="'qty-' + ${p.id}" aria-label="Quantity"/>
+        <button class="btn btn-ghost" th:data-add-to-cart="${p.id}"
+                th:data-product-name="${p.name}" th:data-product-price="${p.price}">Add to cart</button>
+      </div>
+    </div>
+    <div class="sm:col-span-2 flex items-center justify-between gap-2" th:if="${totalPages > 1}">
+      <button class="btn btn-ghost" th:disabled="${currentPage == 0}"
+              th:hx-get="@{/fragments/client/products(categoryId=${selectedCategoryId}, page=${currentPage - 1})}"
+              hx-target="#catalog" hx-swap="innerHTML">← Prev</button>
+      <span class="text-sm text-slate-400">Page <b th:text="${currentPage + 1}">1</b> of <b th:text="${totalPages}">1</b></span>
+      <button class="btn btn-ghost" th:disabled="${currentPage >= totalPages - 1}"
+              th:hx-get="@{/fragments/client/products(categoryId=${selectedCategoryId}, page=${currentPage + 1})}"
+              hx-target="#catalog" hx-swap="innerHTML">Next →</button>
+    </div>
+  </div>
+</div>

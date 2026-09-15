@@ -1,0 +1,32 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="detail">
+  <div class="modal-backdrop" data-modal-backdrop>
+    <div class="card modal-box" role="dialog" aria-modal="true" aria-label="Order details">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-bold">Order #<span th:text="${order.id}">1</span> · <span
+            th:text="${order.orderStatus}">STATUS</span></h3>
+        <button type="button" class="btn btn-ghost" data-close-modal>x</button>
+      </div>
+      <p class="text-xs text-slate-400" th:text="${moment} ?: ${order.moment}">14 Sep 2026 11:00</p>
+      <table class="tbl mt-2">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Qty</th>
+            <th>Price</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="it : ${order.itens}">
+            <td th:text="${it.product.name}">p</td>
+            <td th:text="${it.quantity}">1</td>
+        <td th:text="${#numbers.formatDecimal(it.price, 1, 2)}">0.00</td>
+        <td th:text="${#numbers.formatDecimal(it.subTotal, 1, 2)}">0.00</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="mt-2 font-bold">Total: $<span th:text="${#numbers.formatDecimal(order.total, 1, 2)}">0.00</span></p>
+      <p class="text-xs" th:if="${order.payment != null}" th:text="'Paid at ' + ${order.payment.moment}">paid</p>
+    </div>
+  </div>
+</div>

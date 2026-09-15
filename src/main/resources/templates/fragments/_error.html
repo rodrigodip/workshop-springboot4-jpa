@@ -1,0 +1,11 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="box">
+  <div class="modal-backdrop" data-modal-backdrop>
+    <div class="card modal-box" role="alertdialog" aria-modal="true" aria-label="Error">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-bold">Something needs your attention</h3>
+        <button type="button" class="btn btn-ghost" data-close-modal>✕ Close</button>
+      </div>
+      <div class="err mt-3" th:text="${fragmentError} ?: 'Something went wrong.'">Error</div>
+    </div>
+  </div>
+</div>

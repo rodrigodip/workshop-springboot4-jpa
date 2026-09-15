@@ -1,0 +1,20 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="list">
+  <div th:if="${fragmentError}" class="err mb-2" th:text="${fragmentError}">Error</div>
+  <div th:if="${#lists.isEmpty(orders)}" class="text-sm text-slate-400">No orders yet — place one from the cart.</div>
+  <table th:unless="${#lists.isEmpty(orders)}" class="tbl">
+    <thead><tr><th>#</th><th>Moment</th><th>Status</th><th>Total</th><th></th><th></th></tr></thead>
+    <tbody>
+    <tr th:each="o : ${orders}">
+      <td th:text="${o.id}">1</td>
+      <td th:text="${moments != null ? moments.get(o.id) : o.moment}">14 Sep 2026 11:00</td>
+      <td th:text="${o.orderStatus}">STATUS</td>
+      <td>$<span th:text="${#numbers.formatDecimal(o.total, 1, 2)}">0.00</span></td>
+      <td><button class="btn btn-ghost" th:hx-get="@{'/fragments/client/orders/' + ${o.id}}" hx-target="#order-modal" hx-swap="innerHTML">View</button></td>
+      <td><button th:if="${o.orderStatus != null and (o.orderStatus.name() == 'WAITING_PAYMENT' or o.orderStatus.name() == 'PAID')}"
+                  class="btn btn-danger" th:hx-put="@{'/fragments/client/orders/' + ${o.id} + '/cancel'}"
+                  hx-target="#my-orders" hx-swap="innerHTML" hx-confirm="Cancel this order?">Cancel</button></td>
+    </tr>
+    </tbody>
+  </table>
+  <p th:if="${orders != null and orders.size() > 1}" class="mt-2 font-bold">Total of <span th:text="${orders.size()}">2</span> orders: $<span th:text="${#numbers.formatDecimal(myOrdersTotal, 1, 2)}">0.00</span></p>
+</div>

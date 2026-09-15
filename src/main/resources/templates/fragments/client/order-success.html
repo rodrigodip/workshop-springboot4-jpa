@@ -1,0 +1,3 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="success">
+  <div class="ok" role="status">Order #<span th:text="${order.id}">1</span> created · total $<span th:text="${#numbers.formatDecimal(order.total, 1, 2)}">0.00</span> · status <span th:text="${order.orderStatus}">STATUS</span>.</div>
+</div>

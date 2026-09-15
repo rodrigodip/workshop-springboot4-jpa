@@ -1,0 +1,16 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="gate">
+  <div class="card max-w-xl">
+    <h2 class="text-lg font-bold">Step 1 — Create your client</h2>
+    <p class="text-sm text-slate-400">New client only in this demo. The shop unlocks right after you register.</p>
+    <div th:if="${gateError}" class="err mt-3" th:text="${gateError}">Error</div>
+    <form class="grid gap-3 mt-4" hx-post="/fragments/client/session-client"
+          hx-target="#client-panel" hx-swap="innerHTML" action="/fragments/client/session-client" method="post">
+      <input class="input" name="name" placeholder="Full name *" required/>
+      <input class="input" name="email" type="email" placeholder="Email *" required/>
+      <input class="input" name="phone" placeholder="Phone (digits only) *" required
+             inputmode="numeric" pattern="[0-9]{8,15}" title="Digits only, 8–15 characters"/>
+      <input class="input" name="password" type="password" minlength="4" placeholder="Password (min 4 chars) *" required/>
+      <button class="btn btn-primary" type="submit">Create client &amp; enter shop</button>
+    </form>
+  </div>
+</div>

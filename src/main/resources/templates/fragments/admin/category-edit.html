@@ -1,0 +1,15 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit">
+  <div class="modal-backdrop" data-modal-backdrop>
+    <div class="card modal-box" role="dialog" aria-modal="true" aria-label="Edit category">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-bold">Edit category #<span th:text="${category.id}">1</span></h3>
+        <button type="button" class="btn btn-ghost" data-close-modal>✕</button>
+      </div>
+      <form class="grid gap-2 mt-3" data-modal-form th:hx-put="@{'/fragments/admin/categories/' + ${category.id}}"
+        hx-target="#admin-panel" hx-swap="innerHTML">
+        <input class="input" name="name" placeholder="Category name *" required th:value="${category.name}" />
+        <button class="btn btn-primary" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

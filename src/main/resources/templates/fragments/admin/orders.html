@@ -1,0 +1,52 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="panel">
+  <form id="order-filter-form" class="flex flex-wrap gap-2" hx-get="/fragments/admin/orders" hx-target="#admin-panel"
+    hx-swap="innerHTML">
+    <select class="input" style="max-width:14rem" name="status" onchange="this.form.requestSubmit()">
+      <option value="ALL" th:selected="${selectedStatus == 'ALL'}">All statuses</option>
+      <option th:each="s : ${statuses}" th:value="${s.name()}" th:text="${s.name()}"
+        th:selected="${s.name() == selectedStatus}">S</option>
+    </select>
+    <input class="input" style="max-width:14rem" name="clientName" placeholder="Search client name…"
+      th:value="${selectedClientName}" />
+    <button th:if="${selectedStatus != 'ALL' or !#strings.isEmpty(selectedClientName)}" class="btn btn-primary"
+      hx-get="/fragments/admin/orders" hx-target="#admin-panel" hx-swap="innerHTML">Clear filters</button>
+    <button class="btn btn-ghost" type="submit">Filter</button>
+    <button class="btn btn-ghost !p-2" type="button" onclick="this.form.requestSubmit()"><img
+        th:src="@{/img/refresh-sign.svg}" src="/img/refresh-sign.svg" alt="Product image placeholder" width="22"
+        height="22" /></button>
+  </form>
+  <div class="card mt-3">
+    <div th:if="${#lists.isEmpty(orders)}" class="text-sm text-slate-400">No orders match this filter.</div>
+    <table th:unless="${#lists.isEmpty(orders)}" class="tbl">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="o : ${orders}">
+          <td th:text="${o.id}">1</td>
+          <td th:text="${orderDates != null ? orderDates.get(o.id) : o.moment}">14 Sep 2026</td>
+          <td th:text="${o.client != null ? o.client.name : '-'}">c</td>
+          <td th:text="${o.orderStatus}">S</td>
+          <td>$<span th:text="${#numbers.formatDecimal(o.total, 1, 2)}">0.00</span></td>
+          <td><button class="btn btn-ghost" th:hx-get="@{'/fragments/admin/orders/' + ${o.id}}" hx-target="#admin-panel"
+              hx-swap="innerHTML">Open</button></td>
+          <td><button th:if="${o.client != null}" class="btn btn-ghost"
+              th:title="'Show all orders from ' + ${o.client.name}"
+              th:hx-get="@{/fragments/admin/orders(status=${selectedStatus}, clientName=${o.client.name})}"
+              hx-target="#admin-panel" hx-swap="innerHTML">Client's orders</button></td>
+          <td><button class="btn btn-danger" th:hx-delete="@{'/fragments/admin/orders/' + ${o.id}}"
+              hx-target="#admin-panel" hx-swap="innerHTML" hx-confirm="Delete order?">Delete</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

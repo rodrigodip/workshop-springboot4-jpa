@@ -1,0 +1,19 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit">
+  <div class="modal-backdrop" data-modal-backdrop>
+    <div class="card modal-box" role="dialog" aria-modal="true" aria-label="Edit client">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-bold">Edit client #<span th:text="${client.id}">1</span></h3>
+        <button type="button" class="btn btn-ghost" data-close-modal>✕</button>
+      </div>
+      <form class="grid sm:grid-cols-2 gap-2 mt-3" data-modal-form
+        th:hx-put="@{'/fragments/admin/users/' + ${client.id}}" hx-target="#admin-panel" hx-swap="innerHTML">
+        <input class="input" name="name" placeholder="Name *" required th:value="${client.name}" />
+        <input class="input" name="email" type="email" placeholder="Email *" required th:value="${client.email}" />
+        <input class="input" name="phone" placeholder="Phone (digits only) *" required th:value="${client.phone}"
+          inputmode="numeric" pattern="[0-9]{8,15}" title="Digits only, 8–15 characters" />
+        <input class="input" name="password" type="password" minlength="4" placeholder="New password (blank = keep)" />
+        <button class="btn btn-primary sm:col-span-2" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

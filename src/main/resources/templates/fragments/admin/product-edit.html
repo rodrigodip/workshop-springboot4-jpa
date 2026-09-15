@@ -1,0 +1,34 @@
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit">
+  <div class="modal-backdrop" data-modal-backdrop>
+    <div class="card modal-box" role="dialog" aria-modal="true" aria-label="Edit product">
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-bold">Edit product #<span th:text="${product.id}">1</span></h3>
+        <button type="button" class="btn btn-ghost" data-close-modal>✕</button>
+      </div>
+      <form class="grid sm:grid-cols-2 gap-2 mt-3" data-modal-form
+        th:hx-put="@{'/fragments/admin/products/' + ${product.id}}" hx-target="#admin-panel" hx-swap="innerHTML">
+        <input class="input sm:col-span-2" name="name" placeholder="Name *" required th:value="${product.name}" />
+        <input class="input" name="price" type="number" step="0.01" min="0" placeholder="Price *" required
+          th:value="${product.price}" />
+        <select class="input" data-cat-select>
+          <option value="">Add a category…</option>
+          <option th:each="c : ${allCategories}" th:value="${c.id}" th:text="${c.name}">Cat</option>
+        </select>
+        <input class="input sm:col-span-2" name="description" placeholder="Description"
+          th:value="${product.description}" />
+        <input class="input sm:col-span-2" placeholder="Image URL — managed by seed data (soon)" disabled />
+        <div class="sm:col-span-2 flex flex-wrap gap-2 text-xs" data-cat-chips>
+          <span class="text-slate-500" data-cat-empty th:if="${#sets.isEmpty(product.categories)}">No categories
+            chosen.</span>
+          <span th:each="c : ${product.categories}" th:data-chip="${c.id}"
+            class="flex gap-1 items-center bg-slate-900 border border-slate-700 rounded px-2 py-1">
+            <span th:text="${c.name} + ' '">Cat </span>
+            <input type="hidden" name="categoryIds" th:value="${c.id}" />
+            <button type="button" class="text-slate-400 hover:text-white" data-chip-remove>✕</button>
+          </span>
+        </div>
+        <button class="btn btn-primary sm:col-span-2" type="submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
