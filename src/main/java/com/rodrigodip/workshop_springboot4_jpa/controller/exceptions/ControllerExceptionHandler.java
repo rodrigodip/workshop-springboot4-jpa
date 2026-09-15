@@ -7,13 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.DataBaseException;
 import com.rodrigodip.workshop_springboot4_jpa.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-@ControllerAdvice
+@ControllerAdvice(annotations = RestController.class)
 public class ControllerExceptionHandler implements Serializable {
 
     @ExceptionHandler(ResourceNotFoundException.class)

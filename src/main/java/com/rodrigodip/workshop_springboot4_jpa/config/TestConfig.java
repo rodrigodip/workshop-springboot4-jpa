@@ -50,8 +50,22 @@ public class TestConfig implements CommandLineRunner {
                 Product p4 = new Product(null, "PC Gamer", "Donec aliquet odio ac rhoncus cursus.", 1200.0, "");
                 Product p5 = new Product(null, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.",
                                 100.99, "");
+                Product p6 = new Product(null, "Wireless Headphones", "Phasellus ultricies nulla quis nibh.",
+                                349.9, "");
+                Product p7 = new Product(null, "Mechanical Keyboard", "Quisque volutpat condimentum velit.",
+                                459.0, "");
+                Product p8 = new Product(null, "Clean Code", "A handbook of agile software craftsmanship.",
+                                89.9, "");
+                Product p9 = new Product(null, "4K Monitor", "Class aptent taciti sociosqu ad litora torquent.",
+                                1899.0, "");
+                Product p10 = new Product(null, "Gaming Mouse", "Curabitur ligula sapien, tincidunt non.",
+                                199.9, "");
+                Product p11 = new Product(null, "Domain-Driven Design", "Tackling complexity in the heart of software.",
+                                119.9, "");
+                Product p12 = new Product(null, "Tablet Pro", "Suspendisse potenti nullam in nisi justo.",
+                                1599.0, "");
 
-                productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+                productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12));
 
                 Category cat1 = new Category(null, "Electronics");
                 Category cat2 = new Category(null, "Books");
@@ -65,8 +79,19 @@ public class TestConfig implements CommandLineRunner {
                 p3.getCategories().add(cat3);
                 p4.getCategories().add(cat3);
                 p5.getCategories().add(cat2);
+                p6.getCategories().add(cat1);
+                p7.getCategories().add(cat1);
+                p7.getCategories().add(cat3);
+                p8.getCategories().add(cat2);
+                p9.getCategories().add(cat1);
+                p9.getCategories().add(cat3);
+                p10.getCategories().add(cat1);
+                p10.getCategories().add(cat3);
+                p11.getCategories().add(cat2);
+                p12.getCategories().add(cat1);
+                p12.getCategories().add(cat3);
 
-                productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+                productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12));
 
                 User u1 = new User(null, "Maria Brown", "maria@gmail.com", "988888888", "123456");
                 User u2 = new User(null, "Alex Green", "alex@gmail.com", "977777777", "123456");
